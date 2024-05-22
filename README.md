@@ -14,7 +14,7 @@ sh train_citation.sh
 
 <div align="center">
 
-[![GitHub stars](https://img.shields.io/github/stars/BachNgoH/Open_Research_Assistant)](https://github.com/BachNgoH/Open_Research_Assistant/stargazers)[![GitHub issues](https://img.shields.io/github/issues/BachNgoH/Open_Research_Assistant)](https://github.com/BachNgoH/Open_Research_Assistant/issues)
+[![GitHub stars](https://img.shields.io/github/stars/AIVIETNAMResearch/AIO_Research_Agent)](https://github.com/AIVIETNAMResearch/AIO_Research_Agent/stargazers)[![GitHub issues](https://img.shields.io/github/issues/AIVIETNAMResearch/AIO_Research_Agent)](https://github.com/AIVIETNAMResearch/AIO_Research_Agent/issues)
 
 # AIO Research Assistant
 
@@ -37,8 +37,8 @@ To install this application, follow these steps:
 
 **1. Clone the repository:**
 ```bash
-git clone https://github.com/BachNgoH/Open_Research_Assistant.git
-cd Open_Research_Assistant
+git clone https://github.com/AIVIETNAMResearch/AIO_Research_Agent.git
+cd AIO_Research_Agent
 ```
 
 **2. (Optional) Create and activate a virtual environment:**
