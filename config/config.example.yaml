@@ -1,0 +1,10 @@
+MODEL:  
+  TEMPERATURE: 
+  STREAM: True
+
+  SERVICE: # [ ollama, openai, groq, gemini ] 
+
+  EMBEDDING_MODEL_NAME: 
+  EMBEDDING_SERVICE: # [ollama, openai, hf]
+
+  MODEL_ID: 

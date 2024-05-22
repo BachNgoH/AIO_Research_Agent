@@ -1,0 +1,11 @@
+data/*
+outputs/*
+models/*
+DB/*
+venv/*
+.env
+__pycache__
+lib/*
+*.ipynb
+
+config/config.yaml
