@@ -32,6 +32,10 @@ AIO Research Assistant is an all-in-one intelligent companion for navigating the
 
 ## Demo
 
+
+https://github.com/AIVIETNAMResearch/AIO_Research_Agent/assets/81065083/195df8e8-60c9-442a-9604-33d2a585ff97
+
+
 ## Getting Started
 To install this application, follow these steps:
 
