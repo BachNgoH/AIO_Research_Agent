@@ -48,8 +48,8 @@ cd AIO_Research_Agent
 **2. (Optional) Create and activate a virtual environment:**
 - For Unix/macOS:
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 - For Windows:
