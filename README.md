@@ -19,7 +19,7 @@ sh train_citation.sh
 # AIO Research Assistant
 
 
-AIO Research Assistant is an all-in-one intelligent companion for navigating the world of academic research. Stay on top of the latest research, effortlessly find relevant papers, engage in insightful conversations with our AI assistant, and quickly grasp key takeaways with AI-generated summaries. 
+AIO Research Agent is an all-in-one intelligent companion for navigating the world of academic research. Stay on top of the latest research, effortlessly find relevant papers, engage in insightful conversations with our AI assistant, and quickly grasp key takeaways with AI-generated summaries. 
 
 </div>
 
@@ -31,6 +31,10 @@ AIO Research Assistant is an all-in-one intelligent companion for navigating the
 - Concise Summaries: Quickly grasp key takeaways with AI-generated summaries.
 
 ## Demo
+
+
+https://github.com/AIVIETNAMResearch/AIO_Research_Agent/assets/81065083/195df8e8-60c9-442a-9604-33d2a585ff97
+
 
 ## Getting Started
 To install this application, follow these steps:
