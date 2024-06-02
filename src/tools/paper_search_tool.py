@@ -13,6 +13,8 @@ from llama_index.core.tools import FunctionTool
 from src.constants import EMBEDDING_MODEL_NAME, EMBEDDING_SERVICE
 from datetime import datetime
 import time
+from pyvis.network import Network
+from src.tools.graph_search_tool import create_ego_graph
 
 simple_content_template = """
 Paper link: {paper_link}

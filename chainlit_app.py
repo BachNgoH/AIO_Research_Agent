@@ -1,6 +1,7 @@
+import os
 import chainlit as cl
 from chainlit.types import ThreadDict
-
+from typing import Dict, Optional
 from chainlit.server import app
 from api.controller import router
 from api.service import AssistantService
@@ -29,6 +30,15 @@ def auth_callback(username: str, password: str):
     else:
         return cl.User(identifier=username, metadata={"role": "guest", "provider": "credentials"})
 
+# @cl.oauth_callback
+# def oauth_callback(
+#   provider_id: str,
+#   token: str,
+#   raw_user_data: Dict[str, str],
+#   default_user: cl.User,
+# ) -> Optional[cl.User]:
+#   return default_user
+
 @cl.on_chat_start
 async def start():
     cl.user_session.set("history", [])
@@ -38,7 +48,7 @@ async def start():
         author="Assistant", content="Hello! Im an AI assistant. How may I help you?"
     ).send()
     
-    
+
 @cl.on_chat_resume
 async def on_chat_resume(thread: ThreadDict):
     history = setup_history(thread)
@@ -50,6 +60,7 @@ async def main(message: cl.Message):
     query_engine = cl.user_session.get("query_engine")
     
     history = cl.user_session.get("history")
+    history.append({"role": "user", "content": message.content})
 
     message_history = [ChatMessage(**message) for message in history]
     
@@ -60,8 +71,7 @@ async def main(message: cl.Message):
 
     for token in res.response_gen:
         await msg.stream_token(token)
-    
+        
     await msg.send()
     
-    history.append({"role": "user", "content": message.content})
     history.append({"role": "assistant", "content": res.response})
