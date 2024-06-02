@@ -76,7 +76,7 @@ def load_summarize_tool():
             text_content = extract_text_from_document(save_path)
             print("Extracted text content:")
                 
-            prompt = summarize_template.format(content=text_content)
+            prompt = SUMMARIZE_PROMPT_TEMPLATE.format(content=text_content)
             try:
                 if STREAM:
                     msg = cl.Message(content="", author="Assistant")
