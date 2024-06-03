@@ -11,6 +11,9 @@ llama-index-embeddings-ollama==0.1.2
 
 llama-index-tools-duckduckgo==0.1.0
 llama-index-vector-stores-chroma==0.1.5
+llama-index-vector-stores-qdrant==0.1.6
+
+
 vllm==0.4.0
 fastapi
 easydict==1.9.0

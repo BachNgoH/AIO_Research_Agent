@@ -7,4 +7,6 @@ MODEL:
   EMBEDDING_MODEL_NAME: 
   EMBEDDING_SERVICE: # [ollama, openai, hf]
 
-  MODEL_ID: 
+  MODEL_ID:
+
+  VECTOR_STORE: # currently support [qdrant, chroma] 
