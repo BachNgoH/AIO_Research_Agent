@@ -1,20 +1,43 @@
+import ast
 import logging
+import chainlit as cl
+from chainlit import run_sync
 from typing import Any, Dict, List, Optional
 
 from llama_index.core.callbacks.base_handler import BaseCallbackHandler
 from llama_index.core.callbacks.schema import CBEventType, EventPayload
-
-import chainlit as cl
-from chainlit import run_sync
-
+from ui_templates.source_container import SOURCE_CONTAINER_TEMPLATE, SOURCE_NODE_CONTENT_TEMPLATE
+from src.utils.misc import get_website_info
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.WARNING)
 
+async def run_step(payload):
+    
+    async with cl.Step(name="Function Calling") as step:
+        step.output = payload["function_call_response"]
+    source_nodes = []
+    function_response = ast.literal_eval(payload["function_call_response"])
+
+    if(isinstance(function_response, list)):
+        for source in function_response:
+            
+            website_name, favicon_url = get_website_info(source["link"])
+            source_nodes.append(SOURCE_NODE_CONTENT_TEMPLATE.format(
+                title=" ".join(source["title"].split(" ")[:5] + ["..."]),
+                link=source["link"],
+                web_favicon=favicon_url,
+                web_name=website_name
+            ))
+        
+        source_content = SOURCE_CONTAINER_TEMPLATE.format("".join(source_nodes))
+        await cl.Message(content="", author="Assistant", elements=[
+            cl.Text(name="Sources", content=source_content, display="inline")
+        ]).send()
 
 class ChainlitCallback(BaseCallbackHandler):
     """
-    AimCallback callback class.
+    Chainlit callback class.
 
     Args:
         repo (:obj:`str`, optional):
@@ -94,11 +117,7 @@ Calling function: {payload[EventPayload.TOOL].name} with parameters {payload[Eve
         """
 
         if event_type == CBEventType.FUNCTION_CALL:
-            async def run_step():
-                async with cl.Step(name="generating response") as step:
-                    step.output = payload["function_call_response"]
-        
-            run_sync(run_step())
+            run_sync(run_step(payload))
 
 
     def start_trace(self, trace_id: Optional[str] = None) -> None:

@@ -1,7 +1,5 @@
-import os
 import chainlit as cl
 from chainlit.types import ThreadDict
-from typing import Dict, Optional
 from chainlit.server import app
 from api.controller import router
 from api.service import AssistantService
@@ -39,13 +37,34 @@ def auth_callback(username: str, password: str):
 # ) -> Optional[cl.User]:
 #   return default_user
 
+@cl.action_callback("Summarize any paper!")
+async def on_summarize_action(action):
+    await cl.Message(content=f"Executed {action.name}").send()
+    # Optionally remove the action button from the chatbot user interface
+    await action.remove()
+    
+    
+@cl.action_callback("Search papers in any topic!")
+async def on_search_action(action):
+    await cl.Message(content=f"Executed {action.name}").send()
+    # Optionally remove the action button from the chatbot user interface
+    await action.remove()
+    
+    
+@cl.action_callback("Get the latest trends in AI!")
+async def on_trend_action(action):
+    await cl.Message(content=f"Executed {action.name}").send()
+    # Optionally remove the action button from the chatbot user interface
+    await action.remove()
+
+
 @cl.on_chat_start
 async def start():
     cl.user_session.set("history", [])
     cl.user_session.set("query_engine", assistant_service.query_engine)
-    
+        
     await cl.Message(
-        author="Assistant", content="Hello! Im an AI assistant. How may I help you?"
+        author="Assistant", content="Hello! Im an AI assistant. How may I help you?",
     ).send()
     
 

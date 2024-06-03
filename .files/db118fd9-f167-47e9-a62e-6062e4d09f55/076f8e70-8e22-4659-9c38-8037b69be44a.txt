@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Containers in Row</title>
+    <style>
+        .master-container {
+            display: flex;
+            flex-direction: row;
+            gap: 10px; /* Space between items */
+            padding: 10px;
+            background-color: #f0f0f0;
+            overflow-x: auto; /* Enable horizontal scrolling */
+        }
+        .container {
+            display: flex;
+            align-items: start;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10px;
+            background-color: #f9fafb;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+            color: #39434d;
+            min-width: 250px; /* Minimum width to maintain layout */
+        }
+        .icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        .text {
+            flex-grow: 1;
+            font-size: 14px;
+        }
+        .badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e6e6e6;
+            border-radius: 5%;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-right: 15px;
+            padding-left: 15px;
+            
+            font-size: 12px;
+            color: #39434d;
+            height: 20px; /* Fixed height */
+            margin-top: 5px; /* Space between badge and text */
+        }
+        a {
+            text-decoration: none; /* Remove underline from links */
+            color: inherit; /* Inherit color from parent */
+        }
+        .favicon {
+            width: 16px;  /* Fixed width for the favicon */
+            height: 16px; /* Fixed height for the favicon */
+            margin-right: 5px;  /* Space between favicon and text */
+        }
+    </style>
+</head>
+<body>
+    <div class="master-container">
+        <a href="https://arxiv.org/abs/2405.07992" class="container">
+            <div class="text">MambaOut: Do We Really Need ...</div>
+            <div class="badge">
+                <img src="https://arxiv.org/static/browse/0.3.4/images/icons/apple-touch-icon.png" alt="favicon" class="favicon">
+                arxiv
+            </div>
+        </a>
+        <a href="https://arxiv.org/abs/2405.04404" class="container">
+            <div class="text">Vision Mamba: A Comprehensive Survey ...</div>
+            <div class="badge">
+                <img src="https://arxiv.org/static/browse/0.3.4/images/icons/apple-touch-icon.png" alt="favicon" class="favicon">
+                arxiv
+            </div>
+        </a>
+        <a href="https://arxiv.org/abs/2404.18861" class="container">
+            <div class="text">A Survey on Vision Mamba: ...</div>
+            <div class="badge">
+                <img src="https://arxiv.org/static/browse/0.3.4/images/icons/apple-touch-icon.png" alt="favicon" class="favicon">
+                arxiv
+            </div>
+        </a>
+        <a href="https://arxiv.org/abs/2402.03170" class="container">
+            <div class="text">Is Mamba Capable of In-Context ...</div>
+            <div class="badge">
+                <img src="https://arxiv.org/static/browse/0.3.4/images/icons/apple-touch-icon.png" alt="favicon" class="favicon">
+                arxiv
+            </div>
+        </a>
+        <a href="https://arxiv.org/abs/2404.19394" class="container">
+            <div class="text">CLIP-Mamba: CLIP Pretrained Mamba Models ...</div>
+            <div class="badge">
+                <img src="https://arxiv.org/static/browse/0.3.4/images/icons/apple-touch-icon.png" alt="favicon" class="favicon">
+                arxiv
+            </div>
+        </a>
+    </div>
+</body>
+</html>
+

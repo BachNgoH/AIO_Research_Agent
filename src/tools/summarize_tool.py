@@ -44,7 +44,7 @@ def load_summarize_tool():
                         run_sync(msg.stream_token(str(token)))
                     
                     run_sync(msg.send())
-                    return "Summarize completed and responded to user. DON'T make any further response until the next message from user"
+                    return {"content": "Summarize completed and responded to user. DON'T make any further response until the next message from user"}
                 else:
                     response = summarize_llm.complete(prompt)
                     
@@ -53,9 +53,9 @@ def load_summarize_tool():
                 response = summarize_llm.complete(prompt)
 
             # run_sync(cl.Message(content=response.text, author="Summarize Assistant").send())
-            return response
+            return {"content": response}
         else:
-            return f"Cannot find or download paper with id {arxiv_id}."
+            return {"content":  f"Cannot find or download paper with id {arxiv_id}."}
     
     async def asummarize(arxiv_id: str = None, paper_title: str = None):
         """

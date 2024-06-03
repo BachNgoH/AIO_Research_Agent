@@ -98,19 +98,19 @@ def load_paper_search_tool():
         
         
         retriever_response = paper_retriever.retrieve(query_str)
-        print(len(retriever_response))
         retriever_result = []
         for n in retriever_response:
             paper_id = n.metadata["paper_id"]
+            paper_title = n.metadata["title"]
             paper_content = n.node.get_content(metadata_mode=MetadataMode.LLM)
-            
             paper_link = f"https://arxiv.org/abs/{paper_id}"
-            retriever_result.append(
-                simple_content_template.format(
-                    paper_link=paper_link, 
-                    paper_content=paper_content
-                )
-            )
+            
+            retriever_result.append({
+                'link': paper_link,
+                'paper_id': paper_id,
+                'title': paper_title,
+                'paper_content': paper_content
+            })
             
         # combined_ego_graph = create_ego_graph(retriever_response, service="ss", graph=graph)
         # nt = Network(notebook=True)#, font_color='#10000000')
@@ -120,7 +120,7 @@ def load_paper_search_tool():
 
         # nt.save_graph("./outputs/nx_graph.html")
         
-        return "\n================\n".join(retriever_result)
+        return retriever_result
             
         
     # paper_search_tool = QueryEngineTool.from_defaults(
