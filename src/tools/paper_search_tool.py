@@ -73,37 +73,22 @@ def load_paper_search_tool():
         Returns:
             list: A list of retrieved papers, each containing the paper link and content.
         """
-
-        # db_query = None
         
-        # if start_date != None:
-        #     start_date_obj = datetime.strptime(start_date, "%Y-%m-%d")
-            
-        #     db_query = {"where": {"date": {
-        #             "$gt": datetime(start_date_obj.year, start_date_obj.month, start_date_obj.day).timestamp()
-        #         }}
-        #     }
+        filters = MetadataFilters(filters=[])
 
-        filters = MetadataFilters(filters=[
-            MetadataFilter(
+        if start_date is not None:
+            filters.filters.append(
+                MetadataFilter(
                     key="date", 
                     operator=FilterOperator.GTE, 
-                    value=datetime.strptime(start_date, "%Y-%m-%d").timestamp())
-        ])
-
-        # if start_date is not None:
-        #     filters.filters.append(
-        #         MetadataFilter(
-        #             key="date", 
-        #             operator=FilterOperator.GTE, 
-        #             value=datetime.strptime(start_date, "%Y-%m-%d").timestamp()))
+                    value=datetime.strptime(start_date, "%Y-%m-%d").timestamp()))
             
-        # if end_date is not None:
-        #     filters.filters.append(
-        #         MetadataFilter(
-        #             key="date", 
-        #             operator=FilterOperator.LTE, 
-        #             value=datetime.strptime(end_date, "%Y-%m-%d").timestamp()))
+        if end_date is not None:
+            filters.filters.append(
+                MetadataFilter(
+                    key="date", 
+                    operator=FilterOperator.LTE, 
+                    value=datetime.strptime(end_date, "%Y-%m-%d").timestamp()))
 
 
         paper_retriever = paper_index.as_retriever(
