@@ -73,37 +73,22 @@ def load_paper_search_tool():
         Returns:
             list: A list of retrieved papers, each containing the paper link and content.
         """
-
-        # db_query = None
         
-        # if start_date != None:
-        #     start_date_obj = datetime.strptime(start_date, "%Y-%m-%d")
-            
-        #     db_query = {"where": {"date": {
-        #             "$gt": datetime(start_date_obj.year, start_date_obj.month, start_date_obj.day).timestamp()
-        #         }}
-        #     }
+        filters = MetadataFilters(filters=[])
 
-        filters = MetadataFilters(filters=[
-            MetadataFilter(
+        if start_date is not None:
+            filters.filters.append(
+                MetadataFilter(
                     key="date", 
                     operator=FilterOperator.GTE, 
-                    value=datetime.strptime(start_date, "%Y-%m-%d").timestamp())
-        ])
-
-        # if start_date is not None:
-        #     filters.filters.append(
-        #         MetadataFilter(
-        #             key="date", 
-        #             operator=FilterOperator.GTE, 
-        #             value=datetime.strptime(start_date, "%Y-%m-%d").timestamp()))
+                    value=datetime.strptime(start_date, "%Y-%m-%d").timestamp()))
             
-        # if end_date is not None:
-        #     filters.filters.append(
-        #         MetadataFilter(
-        #             key="date", 
-        #             operator=FilterOperator.LTE, 
-        #             value=datetime.strptime(end_date, "%Y-%m-%d").timestamp()))
+        if end_date is not None:
+            filters.filters.append(
+                MetadataFilter(
+                    key="date", 
+                    operator=FilterOperator.LTE, 
+                    value=datetime.strptime(end_date, "%Y-%m-%d").timestamp()))
 
 
         paper_retriever = paper_index.as_retriever(
@@ -113,19 +98,19 @@ def load_paper_search_tool():
         
         
         retriever_response = paper_retriever.retrieve(query_str)
-        print(len(retriever_response))
         retriever_result = []
         for n in retriever_response:
             paper_id = n.metadata["paper_id"]
+            paper_title = n.metadata["title"]
             paper_content = n.node.get_content(metadata_mode=MetadataMode.LLM)
-            
             paper_link = f"https://arxiv.org/abs/{paper_id}"
-            retriever_result.append(
-                simple_content_template.format(
-                    paper_link=paper_link, 
-                    paper_content=paper_content
-                )
-            )
+            
+            retriever_result.append({
+                'link': paper_link,
+                'paper_id': paper_id,
+                'title': paper_title,
+                'paper_content': paper_content
+            })
             
         # combined_ego_graph = create_ego_graph(retriever_response, service="ss", graph=graph)
         # nt = Network(notebook=True)#, font_color='#10000000')
@@ -135,7 +120,7 @@ def load_paper_search_tool():
 
         # nt.save_graph("./outputs/nx_graph.html")
         
-        return "\n================\n".join(retriever_result)
+        return retriever_result
             
         
     # paper_search_tool = QueryEngineTool.from_defaults(
@@ -168,7 +153,8 @@ def load_daily_paper_tool():
             md_content = file.read()
             
             
-        return f"Report Link: https://github.com/BachNgoH/DailyAIReports/blob/main/daily_reports/{latest_file.split('/')[-1]}\n{md_content}"
+        return {"content":  
+            f"Report Link: https://github.com/BachNgoH/DailyAIReports/blob/main/daily_reports/{latest_file.split('/')[-1]}\n{md_content}"}
             
     return FunctionTool.from_defaults(get_latest_arxiv_papers, description="Useful for getting latest daily papers")
 
@@ -179,6 +165,6 @@ def load_get_time_tool():
         """
         Returns the current time in the format: "YYYY-MM-DD HH:MM:SS".
         """
-        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return {"content": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
     
     return FunctionTool.from_defaults(get_current_time)

@@ -1,4 +1,6 @@
 import os
+import chainlit as cl
+from chainlit.types import ThreadDict
 from typing import Optional
 from llama_index.llms.groq import Groq
 from llama_index.llms.openai import OpenAI
@@ -14,9 +16,12 @@ from src.tools.web_search_tool import load_web_search_tool
 from src.tools.summarize_tool import load_summarize_tool
 from src.constants import SYSTEM_PROMPT
 from starlette.responses import StreamingResponse, Response
-from llama_index.llms.openai import OpenAI
+from llama_index.core.base.llms.types import ChatMessage
+
 from dotenv import load_dotenv
 import logging
+
+from src.utils.chat_utils import setup_history, handle_next_question_generation, handle_generate_actions
 from src.constants import (
     SERVICE,
     TEMPERATURE,
@@ -56,17 +61,17 @@ class AssistantService:
         
         llm = self.load_model(SERVICE, MODEL_ID)
         Settings.llm = llm
-        tools = self.load_tools()
+        self.tools = self.load_tools()
         
         if SERVICE == "gemini":
             query_engine = GeminiForFunctionCalling(
-                tools=tools,
+                tools=self.tools,
                 api_key=os.getenv("GOOGLE_API_KEY"),
                 temperature=TEMPERATURE
             )
         else:
             query_engine = AssistantAgent.from_tools(
-                tools=tools,
+                tools=self.tools,
                 verbose=True,
                 llm=llm,
                 system_prompt = SYSTEM_PROMPT,
@@ -124,4 +129,48 @@ class AssistantService:
             
         else:
             return Response(self.query_engine.chat(prompt).response, media_type="application/text; charset=utf-8")
+    
+    
+    async def aon_start(self):
+        cl.user_session.set("history", [])
+        cl.user_session.set("query_engine", self.query_engine)
+        cl.user_session.set("assistant_service", self)
+            
+        await cl.Message(
+            author="Assistant", content="Hello! Im an AI assistant. How may I help you?",
+        ).send()
+    
+    async def aon_resume(self, thread: ThreadDict):
+        history = setup_history(thread)
+        cl.user_session.set("query_engine", self.query_engine)
+        cl.user_session.set("history", history)
+    
+    
+    async def aon_message(self, message: cl.Message):
+        query_engine = cl.user_session.get("query_engine")
+    
+        history = cl.user_session.get("history")
+        history.append({"role": "user", "content": message.content})
+
+        message_history = [ChatMessage(**message) for message in history]
         
+        res = await cl.make_async(query_engine.stream_chat)(message.content, message_history)
+        # res = query_engine.stream_chat(message.content)
+
+        msg = cl.Message(content="", author="Assistant")
+
+        for token in res.response_gen:
+            await msg.stream_token(token)
+            
+        await msg.send()
+        
+        history.append({"role": "assistant", "content": res.response})
+        
+        next_questions = handle_next_question_generation(tools=self.tools, query_str=message.content, llm_response=res.response)
+        handle_generate_actions(next_questions)
+        
+        actions = [
+            cl.Action(name=question, value=question, description=question) for question in next_questions
+        ]
+        msg.actions = actions
+        await msg.update()

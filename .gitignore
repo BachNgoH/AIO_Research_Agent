@@ -11,3 +11,4 @@ lib/*
 config/config.yaml
 wandb/*
 lib/*
+.files/*

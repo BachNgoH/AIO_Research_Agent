@@ -33,7 +33,12 @@ def search_output_parser(response):
                 node=Document(text=simple_web_search_template.format(
                     title=title, 
                     search_link=link, 
-                    search_content=snippet)
+                    search_content=snippet),
+                    metadata={
+                        "title": title,
+                        "link": link,
+                        "content": snippet
+                    }
                 ),
                 score=1
             ))
@@ -75,11 +80,6 @@ def load_web_search_tool():
             query_str=query_str
         )
 
-        return "\n================\n".join([n.get_content(MetadataMode.LLM) for n in web_search_results])
+        return [res.metadata for res in web_search_results]
             
-        
-    # paper_search_tool = QueryEngineTool.from_defaults(
-    #     query_engine=paper_query_engine,
-    #     description="Useful for answering questions related to scientific papers",
-    # )
     return FunctionTool.from_defaults(search_web, description="Function to search the web, avoid using this tool if other tools can do the job")
