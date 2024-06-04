@@ -14,10 +14,8 @@ logger.setLevel(logging.WARNING)
 
 async def run_step(payload):
     
-    async with cl.Step(name="Function Calling") as step:
-        step.output = payload["function_call_response"]
-    source_nodes = []
     function_response = ast.literal_eval(payload["function_call_response"])
+    source_nodes = []
 
     if(isinstance(function_response, list)):
         for source in function_response:

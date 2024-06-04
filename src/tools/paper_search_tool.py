@@ -153,7 +153,8 @@ def load_daily_paper_tool():
             md_content = file.read()
             
             
-        return f"Report Link: https://github.com/BachNgoH/DailyAIReports/blob/main/daily_reports/{latest_file.split('/')[-1]}\n{md_content}"
+        return {"content":  
+            f"Report Link: https://github.com/BachNgoH/DailyAIReports/blob/main/daily_reports/{latest_file.split('/')[-1]}\n{md_content}"}
             
     return FunctionTool.from_defaults(get_latest_arxiv_papers, description="Useful for getting latest daily papers")
 
@@ -164,6 +165,6 @@ def load_get_time_tool():
         """
         Returns the current time in the format: "YYYY-MM-DD HH:MM:SS".
         """
-        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return {"content": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
     
     return FunctionTool.from_defaults(get_current_time)

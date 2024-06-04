@@ -1,3 +1,9 @@
+# --background-color: #f0f0f0;  
+# --container-background: #f9fafb; 
+# --text-color: #39434d;
+# --badge-background: #e6e6e6;
+# --link-color: #4285f4; /* Example of a contrasting link color */
+
 SOURCE_CONTAINER_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="en">
@@ -6,13 +12,50 @@ SOURCE_CONTAINER_TEMPLATE = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Styled Containers in Row</title>
     <style>
+        /* Custom scrollbar for WebKit browsers */
+        ::-webkit-scrollbar {{
+            width: 8px;  /* Width of the scrollbar */
+            height: 8px; /* Height of the scrollbar (for horizontal scrollbars) */
+        }}
+
+        ::-webkit-scrollbar-thumb {{
+            background: #888; /* Color of the scrollbar thumb */
+            border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+        }}
+
+        ::-webkit-scrollbar-thumb:hover {{
+            background: #555; /* Color of the scrollbar thumb when hovered */
+        }}
+
+        ::-webkit-scrollbar-track {{
+            background: #121212; /* Color of the scrollbar track */
+        }}
+
+        :root {{
+            --background-color: #121212; 
+            --container-background: #1e1e1e;
+            --text-color: #e8eaed;
+            --badge-background: #303030;
+            --link-color: #8ab4f8; /* Lighter link for contrast */
+        }}
+
+
+        /* Dark Mode Styles */
+        body.dark-mode {{
+            --background-color: #121212; 
+            --container-background: #1e1e1e;
+            --text-color: #e8eaed;
+            --badge-background: #303030;
+            --link-color: #8ab4f8; /* Lighter link for contrast */
+        }}
+
         .master-container {{
             display: flex;
             flex-direction: row;
-            gap: 10px; /* Space between items */
+            gap: 10px; 
             padding: 10px;
-            background-color: #f0f0f0;
-            overflow-x: auto; /* Enable horizontal scrolling */
+            background-color: var(--background-color); 
+            overflow-x: scroll; 
         }}
         .container {{
             display: flex;
@@ -20,11 +63,11 @@ SOURCE_CONTAINER_TEMPLATE = """
             flex-direction: column;
             justify-content: center;
             padding: 10px;
-            background-color: #f9fafb;
             border-radius: 10px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             font-family: Arial, sans-serif;
-            color: #39434d;
+            background-color: var(--container-background);
+            color: var(--text-color);
             min-width: 250px; /* Minimum width to maintain layout */
         }}
         .icon {{
@@ -40,7 +83,6 @@ SOURCE_CONTAINER_TEMPLATE = """
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #e6e6e6;
             border-radius: 5%;
             padding-top: 5px;
             padding-bottom: 5px;
@@ -48,13 +90,14 @@ SOURCE_CONTAINER_TEMPLATE = """
             padding-left: 15px;
             
             font-size: 12px;
-            color: #39434d;
+            background-color: var(--badge-background);
+            color: var(--text-color);
             height: 20px; /* Fixed height */
             margin-top: 5px; /* Space between badge and text */
         }}
         a {{
             text-decoration: none; /* Remove underline from links */
-            color: inherit; /* Inherit color from parent */
+            color: var(--link-color); 
         }}
         .favicon {{
             width: 16px;  /* Fixed width for the favicon */
@@ -66,6 +109,24 @@ SOURCE_CONTAINER_TEMPLATE = """
 <body>
     <div class="master-container">{}
     </div>
+    <script>
+        console.log("Loaded theme");
+
+        (function() {{ 
+            function loadTheme() {{
+                const themeVariant = localStorage.getItem('themeVariant'); // Get stored theme
+                console.log("Theme variant: ", themeVariant);
+                if (themeVariant === 'dark') {{
+                    document.body.classList.add('dark-mode'); // Apply dark mode
+                }} else {{
+                    document.body.classList.remove('dark-mode'); // Apply light mode (or remove dark mode)
+                }}
+            }}
+        
+            loadTheme();
+        }})();
+        
+    </script>
 </body>
 </html>
 

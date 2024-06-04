@@ -73,7 +73,7 @@ def ingest_paper(arxiv_documents):
     else:
         raise NotImplementedError()   
     print("Embed model loaded successfully.")
-           
+
     chroma_client = chromadb.PersistentClient(path="./DB/arxiv")
     chroma_collection = chroma_client.get_or_create_collection("gemma_assistant_arxiv_papers")
 
