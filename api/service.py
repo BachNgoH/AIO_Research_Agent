@@ -136,9 +136,9 @@ class AssistantService:
         cl.user_session.set("query_engine", self.query_engine)
         cl.user_session.set("assistant_service", self)
             
-        await cl.Message(
-            author="Assistant", content="Hello! Im an AI assistant. How may I help you?",
-        ).send()
+        # await cl.Message(
+        #     author="Assistant", content="Hello! Im an AI assistant. How may I help you?",
+        # ).send()
     
     async def aon_resume(self, thread: ThreadDict):
         history = setup_history(thread)
