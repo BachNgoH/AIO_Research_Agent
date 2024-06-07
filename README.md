@@ -16,10 +16,10 @@ sh train_citation.sh
 
 [![GitHub stars](https://img.shields.io/github/stars/AIVIETNAMResearch/AIO_Research_Agent)](https://github.com/AIVIETNAMResearch/AIO_Research_Agent/stargazers)[![GitHub issues](https://img.shields.io/github/issues/AIVIETNAMResearch/AIO_Research_Agent)](https://github.com/AIVIETNAMResearch/AIO_Research_Agent/issues)
 
-# AIO Research Assistant
+# AIO Research Agent
 
 
-AIO Research Agent is an all-in-one intelligent companion for navigating the world of academic research. Stay on top of the latest research, effortlessly find relevant papers, engage in insightful conversations with our AI assistant, and quickly grasp key takeaways with AI-generated summaries. 
+AIO Research Agent is an all-in-one intelligent companion for navigating the world of academic research. Stay on top of the latest research, effortlessly find relevant papers, engage in insightful conversations with our AI Agent, and quickly grasp key takeaways with AI-generated summaries. 
 
 </div>
 
@@ -104,7 +104,7 @@ git clone https://github.com/BachNgoH/DailyAIReports.git
 
 ## Acknowldgement
 
-Open Research Assistant is made possible by these key technologies:
+AIO Research Agent is made possible by these key technologies:
 
 - [LlamaIndex](https://www.llamaindex.ai/): Providing the RAG (Retrieval Augmented Generation) framework.
 - [Chainlit](https://docs.chainlit.io/get-started/overview): Enabling the intuitive user interface.
