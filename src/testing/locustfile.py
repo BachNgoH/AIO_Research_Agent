@@ -26,5 +26,5 @@ if __name__ == "__main__":
     import os
 
     os.system(
-        "locust -f locustfile.py --host=http://localhost:8008"
+        "locust -f locustfile.py --host=http://localhost:8000"
     )

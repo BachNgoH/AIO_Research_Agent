@@ -72,25 +72,25 @@ async def on_chat_start():
 async def set_starters():
     return [
         cl.Starter(
-            label="Morning routine ideation",
-            message="Can you help me create a personalized morning routine that would help increase my productivity throughout the day? Start by asking me about my current habits and what activities energize me in the morning.",
-            icon="/public/idea.svg",
+            label="Update AI Trends!",
+            message="Can you give me an overview of the latest research papers published today?",
+            icon="/public/default.png",
             ),
 
         cl.Starter(
-            label="Explain superconductors",
-            message="Explain superconductors like I'm five years old.",
-            icon="/public/learn.svg",
+            label="Targeted paper search!",
+            message="I'm looking for research papers on transfer learning in computer vision. Can you help me find the most relevant ones?",
+            icon="/public/default.png",
             ),
         cl.Starter(
-            label="Python script for daily email reports",
-            message="Write a script to automate sending daily email reports in Python, and walk me through how I would set it up.",
-            icon="/public/terminal.svg",
+            label="Summarize any paper!",
+            message="Could you provide a brief summary of the key findings from the Llama 2 paper?",
+            icon="/public/default.png",
             ),
         cl.Starter(
-            label="Text inviting friend to wedding",
-            message="Write a text asking a friend to be my plus-one at a wedding next month. I want to keep it super short and casual, and offer an out.",
-            icon="/public/write.svg",
+            label="Find content from the web!",
+            message="Can you help me find recent blog posts discussing advancements in deep learning techniques?",
+            icon="/public/default.png",
             )
         ]
 

@@ -33,6 +33,6 @@ def handle_generate_actions(questions):
     for question in questions:
         @cl.action_callback(question)
         async def next_question(action):
-            message = cl.Message(content=action.value, author="User")
+            message = cl.Message(content=action.value, author=cl.user_session.get("user").identifier)
             await message.send()
             await assistant_service.aon_message(message)
