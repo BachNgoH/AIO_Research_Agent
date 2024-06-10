@@ -4,9 +4,7 @@ from chainlit.server import app
 from api.controller import router
 from api.service import AssistantService
 from src.callbacks.chainlit_callback import ChainlitCallback
-from src.utils.chat_utils import setup_history, handle_next_question_generation
 from llama_index.core.callbacks import CallbackManager
-from llama_index.core.base.llms.types import ChatMessage
 
 app.include_router(router=router, prefix="/v1")
 
