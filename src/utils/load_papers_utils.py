@@ -20,6 +20,7 @@ def download_arxiv_paper(arxiv_id = None, save_path="./outputs/temp_paper.pdf"):
     """
     pdf_url = f"https://arxiv.org/pdf/{arxiv_id}.pdf"
     
+    save_path += ".pdf"
     try:
         response = requests.get(pdf_url)
         if response.status_code == 200:
