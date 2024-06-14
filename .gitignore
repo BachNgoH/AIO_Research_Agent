@@ -12,3 +12,4 @@ config/config.yaml
 wandb/*
 lib/*
 .files/*
+qdrant_storage/*
